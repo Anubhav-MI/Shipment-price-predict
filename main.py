@@ -3,7 +3,6 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-# from train_model import train_and_save_model
 # from predict_model import predict_from_input
 
 import os
@@ -18,29 +17,52 @@ app.mount("/static", StaticFiles(directory="."), name="static")
 async def show_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
-# @app.get("/train")
-# async def train():
-#     msg = train_and_save_model()
-#     return {"message": msg}
+@app.post("/predict")
+async def predict(
+    Customer_Id: str = Form(...),
+    Artist_Name: str = Form(...),
+    Artist_Reputation: float = Form(...),
+    Height: float = Form(...),
+    Width: float = Form(...),
+    Weight: float = Form(...),
+    Material: str = Form(...),
+    Price_Of_Sculpture: float = Form(...),
+    Base_Shipping_Price: float = Form(...),
+    International: str = Form(...),
+    Express_Shipment: str = Form(...),
+    Installation_Included: str = Form(...),
+    Transport: str = Form(...),
+    Fragile: str = Form(...),
+    Customer_Information: str = Form(...),
+    Remote_Location: str = Form(...),
+    Scheduled_Date: str = Form(...),
+    Delivery_Date: str = Form(...),
+    Customer_Location: str = Form(...)
+):
+    input_data = {
+        "Customer Id": Customer_Id,
+        "Artist Name": Artist_Name,
+        "Artist Reputation": Artist_Reputation,
+        "Height": Height,
+        "Width": Width,
+        "Weight": Weight,
+        "Material": Material,
+        "Price Of Sculpture": Price_Of_Sculpture,
+        "Base Shipping Price": Base_Shipping_Price,
+        "International": International,
+        "Express Shipment": Express_Shipment,
+        "Installation Included": Installation_Included,
+        "Transport": Transport,
+        "Fragile": Fragile,
+        "Customer Information": Customer_Information,
+        "Remote Location": Remote_Location,
+        "Scheduled Date": Scheduled_Date,
+        "Delivery Date": Delivery_Date,
+        "Customer Location": Customer_Location
+    }
 
-# @app.post("/predict")
-# async def predict(
-#     Pclass: int = Form(...),
-#     Sex: str = Form(...),
-#     Age: float = Form(...),
-#     SibSp: int = Form(...),
-#     Parch: int = Form(...),
-#     Fare: float = Form(...),
-#     Embarked: str = Form(...)
-# ):
-#     input_data = {
-#         "Pclass": Pclass,
-#         "Sex": Sex,
-#         "Age": Age,
-#         "SibSp": SibSp,
-#         "Parch": Parch,
-#         "Fare": Fare,
-#         "Embarked": Embarked
-#     }
-#     pred = predict_from_input(input_data)
-#     return {"prediction": "Survived" if pred == 1 else "Did not Survive"}
+    # Replace with actual prediction call
+    # predicted_cost = predict_from_input(input_data)
+    predicted_cost = 1234.56  # Mock value
+
+    return {"estimated_cost": predicted_cost}
