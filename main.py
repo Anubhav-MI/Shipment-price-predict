@@ -17,6 +17,12 @@ app.mount("/static", StaticFiles(directory="."), name="static")
 async def show_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
 
+#api to run the pipeline
+# @app.get("/train")
+# async def train():
+#     msg = train_and_save_model()
+#     return {"message": msg}
+
 @app.post("/predict")
 async def predict(
     Customer_Id: str = Form(...),
