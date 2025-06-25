@@ -1,0 +1,20 @@
+<!-- form.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Titanic Survival Prediction</title>
+  </head>
+  <body>
+    <h2>Enter Passenger Information</h2>
+    <form action="/predict" method="post">
+      Pclass: <input type="number" name="Pclass" /><br /><br />
+      Sex: <input type="text" name="Sex" /><br /><br />
+      Age: <input type="number" step="any" name="Age" /><br /><br />
+      SibSp: <input type="number" name="SibSp" /><br /><br />
+      Parch: <input type="number" name="Parch" /><br /><br />
+      Fare: <input type="number" step="any" name="Fare" /><br /><br />
+      Embarked: <input type="text" name="Embarked" /><br /><br />
+      <input type="submit" value="Predict" />
+    </form>
+  </body>
+</html>
