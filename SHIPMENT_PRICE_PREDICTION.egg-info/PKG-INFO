@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: SHIPMENT-PRICE-PREDICTION
+Version: 0.0.1
+Author: Ayush Raj
+Author-email: peka021@gmail.com
+License-File: LICENSE
+Requires-Dist: python-dotenv
+Requires-Dist: pandas
+Requires-Dist: numpy
+Requires-Dist: pymongo
+Requires-Dist: certifi
+Requires-Dist: scikit-learn
+Dynamic: author
+Dynamic: author-email
+Dynamic: license-file
+Dynamic: requires-dist
