@@ -1,0 +1,17 @@
+LICENSE
+README.md
+setup.py
+SHIPMENT_PRICE_PREDICTION.egg-info/PKG-INFO
+SHIPMENT_PRICE_PREDICTION.egg-info/SOURCES.txt
+SHIPMENT_PRICE_PREDICTION.egg-info/dependency_links.txt
+SHIPMENT_PRICE_PREDICTION.egg-info/requires.txt
+SHIPMENT_PRICE_PREDICTION.egg-info/top_level.txt
+shipment/__init__.py
+shipment/components/__init__.py
+shipment/components/data_ingestion.py
+shipment/constant/__init__.py
+shipment/constant/training_pipeline/__init__.py
+shipment/entity/__init__.py
+shipment/entity/config_entity.py
+shipment/logging/__init__.py
+shipment/logging/logger.py
