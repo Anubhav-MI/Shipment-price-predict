@@ -1,20 +1,31 @@
-<!-- form.html -->
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Titanic Survival Prediction</title>
+    <title>Sculpture Delivery Cost Estimation</title>
   </head>
   <body>
-    <h2>Enter Passenger Information</h2>
+    <h2>Enter Sculpture and Customer Information</h2>
     <form action="/predict" method="post">
-      Pclass: <input type="number" name="Pclass" /><br /><br />
-      Sex: <input type="text" name="Sex" /><br /><br />
-      Age: <input type="number" step="any" name="Age" /><br /><br />
-      SibSp: <input type="number" name="SibSp" /><br /><br />
-      Parch: <input type="number" name="Parch" /><br /><br />
-      Fare: <input type="number" step="any" name="Fare" /><br /><br />
-      Embarked: <input type="text" name="Embarked" /><br /><br />
-      <input type="submit" value="Predict" />
+      Customer ID: <input type="text" name="Customer Id" /><br /><br />
+      Artist Name: <input type="text" name="Artist Name" /><br /><br />
+      Artist Reputation: <input type="number" step="any" name="Artist Reputation" /><br /><br />
+      Height (cm): <input type="number" step="any" name="Height" /><br /><br />
+      Width (cm): <input type="number" step="any" name="Width" /><br /><br />
+      Weight (kg): <input type="number" step="any" name="Weight" /><br /><br />
+      Material: <input type="text" name="Material" /><br /><br />
+      Price Of Sculpture: <input type="number" step="any" name="Price Of Sculpture" /><br /><br />
+      Base Shipping Price: <input type="number" step="any" name="Base Shipping Price" /><br /><br />
+      International (Yes/No): <input type="text" name="International" /><br /><br />
+      Express Shipment (Yes/No): <input type="text" name="Express Shipment" /><br /><br />
+      Installation Included (Yes/No): <input type="text" name="Installation Included" /><br /><br />
+      Transport: <input type="text" name="Transport" /><br /><br />
+      Fragile (Yes/No): <input type="text" name="Fragile" /><br /><br />
+      Customer Information: <input type="text" name="Customer Information" /><br /><br />
+      Remote Location (Yes/No): <input type="text" name="Remote Location" /><br /><br />
+      Scheduled Date (YYYY-MM-DD): <input type="date" name="Scheduled Date" /><br /><br />
+      Delivery Date (YYYY-MM-DD): <input type="date" name="Delivery Date" /><br /><br />
+      Customer Location: <input type="text" name="Customer Location" /><br /><br />
+      <input type="submit" value="Estimate Cost" />
     </form>
   </body>
 </html>
