@@ -2,7 +2,8 @@ from datetime import datetime
 import os
 
 from shipment.constant import training_pipeline
-
+from shipment.utils.main_utils.utils import MainUtils  
+from shipment.constant.training_pipeline import SCHEMA_FILE_PATH
 print(training_pipeline.PIPELINE_NAME)
 print(training_pipeline.ARTIFACT_DIR)
 
@@ -93,3 +94,42 @@ class DataValidationConfig:
             training_pipeline.DATA_VALIDATION_DATA_TYPE_REPORT_DIR,
             training_pipeline.DATA_VALIDATION_DATA_TYPE_REPORT_FILE_NAME,
         )
+
+
+
+
+class DataTransformationConfig:
+    def __init__(self, training_pipeline_config):
+        self.data_transformation_dir = os.path.join(
+            training_pipeline_config.artifact_dir,
+            training_pipeline.DATA_TRANSFORMATION_DIR_NAME
+        )
+
+        # Path to transformed data
+        self.transformed_train_file_path = os.path.join(
+            self.data_transformation_dir,
+            training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
+            training_pipeline.TRANSFORMED_TRAIN_FILE_NAME
+        )
+        self.transformed_test_file_path = os.path.join(
+            self.data_transformation_dir,
+            training_pipeline.DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,
+            training_pipeline.TRANSFORMED_TEST_FILE_NAME
+        )
+
+        # Path to preprocessor (like StandardScaler, ColumnTransformer, etc.)
+        self.preprocessor_object_file_path = os.path.join(
+            self.data_transformation_dir,
+            training_pipeline.DATA_TRANSFORMATION_PREPROCESSOR_DIR,
+            training_pipeline.PREPROCESSOR_OBJECT_FILE_NAME
+        )
+
+        # # Utility and Schema
+        # self.UTILS = MainUtils()
+        # self.SCHEMA_CONFIG = self.UTILS.read_yaml_file(SCHEMA_FILE_PATH)
+
+        # # For saving in initiate_data_transformation()
+        # self.TRANSFORMED_TRAIN_DATA_DIR = os.path.dirname(self.transformed_train_file_path)
+        # self.TRANSFORMED_TEST_DATA_DIR = os.path.dirname(self.transformed_test_file_path)
+        # self.PREPROCESSOR_FILE_PATH = self.preprocessor_object_file_path
+

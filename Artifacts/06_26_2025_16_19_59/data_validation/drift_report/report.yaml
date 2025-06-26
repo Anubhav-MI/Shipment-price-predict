@@ -1,0 +1,60 @@
+Artist Name:
+  drift_status: true
+  p_value: 1.25e-321
+Artist Reputation:
+  drift_status: false
+  p_value: 0.09196138566270558
+Base Shipping Price:
+  drift_status: false
+  p_value: 0.6109593824511814
+Cost:
+  drift_status: false
+  p_value: 0.8231493886214557
+Customer Id:
+  drift_status: true
+  p_value: 1.245e-321
+Customer Information:
+  drift_status: false
+  p_value: 1.0
+Customer Location:
+  drift_status: true
+  p_value: 1.245e-321
+Delivery Date:
+  drift_status: true
+  p_value: 1.297681722144246e-184
+Express Shipment:
+  drift_status: false
+  p_value: 1.0
+Fragile:
+  drift_status: false
+  p_value: 1.0
+Height:
+  drift_status: true
+  p_value: 0.038117149575075226
+Installation Included:
+  drift_status: false
+  p_value: 0.9832770510723982
+International:
+  drift_status: false
+  p_value: 0.9999991805063191
+Material:
+  drift_status: false
+  p_value: 0.6840841124457004
+Price Of Sculpture:
+  drift_status: false
+  p_value: 0.38109376246115617
+Remote Location:
+  drift_status: false
+  p_value: 0.9986451549055898
+Scheduled Date:
+  drift_status: true
+  p_value: 4.969494263301655e-177
+Transport:
+  drift_status: false
+  p_value: 0.8972364641708503
+Weight:
+  drift_status: false
+  p_value: 0.2895337793298889
+Width:
+  drift_status: false
+  p_value: 0.3635092122078555
