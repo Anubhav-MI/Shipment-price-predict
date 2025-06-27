@@ -1,241 +1,458 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shipping Cost Prediction</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
-      }
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shipping Cost Prediction</title>
 
-      .form-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 100vh;
-        padding: 60px 80px;
-        box-sizing: border-box;
-        gap: 40px;
-        flex-wrap: wrap;
-      }
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-      .form-text-side {
-        flex: 1;
-        max-width: 600px;
-        padding-right: 20px;
-        text-align: left;
-      }
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('images/img12.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      overflow-x: hidden; 
+    }
+    .select-icon-wrapper {
+      position: relative;
+      margin-bottom: 1rem;
+    }
 
-      .form-text-side h1 {
-        font-size: 2.5rem;
+    .select-icon-wrapper i {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #161616;
+      transition: color 0.3s ease; 
+      font-size: 1.1em; 
+    }
+
+    .select-icon-wrapper select {
+      padding-left: 40px; 
+    }
+
+    .form-section {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 100vh;
+      padding: 60px 80px;
+      box-sizing: border-box;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .form-text-side {
+      flex: 1;
+      max-width: 600px;
+      padding-right: 20px;
+      text-align: left;
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: fadeInSlideLeft 1s ease-out forwards;
+    }
+
+    .form-text-side h1 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #a100ff;
+    }
+
+    .form-text-side p {
+      color: #060606;
+      font-size: 16px;
+    }
+
+    .logo {
+      margin-top: -300px;
+      animation: logoScaleIn 0.8s ease-out forwards;
+    }
+
+    .form-img {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+
+    .form-container {
+      flex: 1;
+      max-width: 700px; 
+      padding: 30px;
+      border-radius: 20px;
+      background-color: rgba(38, 37, 37, 0.139);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.808);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 2px solid rgba(49, 47, 47, 0.228);
+      /* Animation */
+      opacity: 0;
+      transform: translateX(50px);
+      animation: fadeInSlideRight 1s ease-out forwards;
+      animation-delay: 0.2s; /* Delay for a staggered effect */
+    }
+
+    .form-container h2 {
+        color: #fff; /* White color for the form title */
+        margin-bottom: 25px;
+        text-align: center;
         font-weight: bold;
-        margin-bottom: 15px;
-        color: #a100ff;
-      }
+        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    }
 
-      .form-text-side p {
-        color: #060606;
-        font-size: 16px;
-      }
+    .form-floating > label {
+      color: #000000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.9em;
+    }
 
-      .form-img {
-        margin-top: 20px;
-        max-width: 100%;
-      }
+    .form-select,
+    .form-control {
+      border-radius: 20px;
+      background-color: #f5f5f5;
+      color: #000;
+      max-height: 90px;
+      padding: 10px 15px 10px 40px; /* Adjust padding for icon */
+      font-size: 0.9em;
+      transition: all 0.3s ease; /* Smooth transition for focus effects */
+    }
 
-      .form-container {
-        flex: 1;
-        max-width: 500px;
-        padding: 30px;
+    .form-select:focus,
+    .form-control:focus {
+      border-color: #ffffff;
+      box-shadow: 0 0 0 0.25rem rgba(252, 252, 252, 0.146);
+      background-color: #ffffff;
+    }
+
+    .form-floating input:focus ~ label,
+    .form-floating input:not(:placeholder-shown) ~ label,
+    .form-floating select:focus ~ label,
+    .form-floating select:not([value=""]) ~ label,
+    .form-floating .form-control:valid ~ label,
+    .form-floating .form-select:valid ~ label {
+        transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
+        color: #7605ab; 
+    }
+
+
+    .btn-submit {
+      background-color: #a100ff; 
+      color: #fff;
+      border: none;
+      padding: 12px;
+      border-radius: 20px;
+      width: 100%;
+      font-weight: bold;
+      letter-spacing: 1px; 
+      text-transform: uppercase; 
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-submit:hover {
+      background-color: #444444;
+      color: #c5c5c5;
+      transform: translateY(-2px); 
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    fieldset {
+        border: 1px solid rgba(149, 147, 147, 0.03);
         border-radius: 10px;
-        background-color: rgba(249, 249, 249, 0.09);
-        box-shadow: 0 4px 20px rgba(247, 246, 246, 0.808);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(49, 47, 47, 0.15);
-      }
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.454);
+    }
 
-      .form-control,
-      .form-select {
-        color: #000;
-        background-color: #f5f5f5;
-        border: 1px solid #ffffff;
-        border-radius: 5px;
-        margin-bottom: 15px;
-        padding: 12px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-
-      .form-control:focus,
-      .form-select:focus {
-        outline: none;
-        border-color: #cbc9c9;
-        color: #000;
-        background-color: #f5f5f5;
-      }
-
-      .form-select option {
-        color: #000;
-      }
-
-      ::placeholder {
-        color: #000;
-        opacity: 1;
-      }
-
-      input::-moz-placeholder {
-        color: #000;
-        opacity: 1;
-      }
-
-      input:-ms-input-placeholder {
-        color: #000;
-      }
-
-      input::-ms-input-placeholder {
-        color: #000;
-      }
-
-      .btn-submit {
-        background-color: #000;
-        color: #fff;
-        border: none;
-        padding: 12px;
-        border-radius: 5px;
-        width: 100%;
+    legend {
+        color: #e0e0e0;
+        font-size: 1.3em;
         font-weight: bold;
+        padding: 0 10px;
+        margin-bottom: 15px;
+        width: auto; 
+        border-bottom: none; 
+        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+    }
+
+    .row > div > .mb-3 {
+        margin-bottom: 1rem !important; 
+    }
+
+
+    @keyframes fadeInSlideLeft {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInSlideRight {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes logoScaleIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .form-section {
+        flex-direction: column;
+        padding: 40px 20px;
       }
 
-      .btn-submit:hover {
-        background-color: #333;
+      .form-text-side,
+      .form-container {
+        max-width: 100%;
+        padding: 0;
+        transform: translateX(0);
+        opacity: 1;
+        animation: none;
       }
+      @keyframes mobileFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      .form-text-side, .form-container {
+        animation: mobileFadeIn 0.8s ease-out forwards;
+      }
+    }
 
-      @media (max-width: 992px) {
-        .form-section {
-          flex-direction: column;
-          padding: 40px 20px;
+    @media (max-width: 768px) { 
+        .row .col-md-6 {
+            flex: 0 0 100%; 
+            max-width: 100%;
         }
+    }
+  </style>
+</head>
+<body>
 
-        .form-text-side,
-        .form-container {
-          max-width: 100%;
-          padding: 0;
-        }
-      }
-
-      select.form-select {
-        background-color: #ffffff;
-        color: #333333;
-        border: 1px solid #888;
-        padding: 10px;
-        border-radius: 5px;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-      }
-      /* .form-label {
-  font-weight: bold;
-  color: #000;
-  margin-bottom: 5px;
-  display: block; */
-/* } */
-    </style>
-  </head>
-  <body>
-    <div class="form-section">
-      <div class="form-text-side">
-        <h1>Unbox Smarter Shipping Decisions!</h1>
-        <p>
-          Predict costs before they surprise you. Our intelligent tool helps you ship faster, smarter, and more affordably—no guesswork, just precision.
-        </p>
-        <img src="images/img11.png" alt="Illustration" class="form-img" />
-      </div>
-
-      <div class="form-container">
-        <form action="/predict" method="post">
-          <input type="text" class="form-control" name="customerId" placeholder="Customer ID" required />
-          <input type="text" class="form-control" name="artistName" placeholder="Artist Name" required />
-          <input type="number" class="form-control" name="artist" placeholder="Artist reputation" required />
-          <input type="number" class="form-control" name="height" placeholder="Height" required />
-          <input type="number" class="form-control" name="width" placeholder="Width" required />
-          <input type="number" class="form-control" name="weight" placeholder="Weight" required />
-
-          <select class="form-select" name="material" required>
-            <option value="" disabled selected>Select material</option>
-            <option>Aluminium</option>
-            <option>Marble</option>
-            <option>Bronze</option>
-            <option>Clay</option>
-            <option>Brass</option>
-            <option>Wood</option>
-            <option>Stone</option>
-          </select>
-
-          <input type="number" class="form-control" name="priceOfSculpture" placeholder="Price of Sculpture" required />
-          <input type="number" class="form-control" name="baseShippingPrice" placeholder="Base Shipping Price" required />
-
-          <select class="form-select" name="international" required>
-            <option value="" disabled selected>International?</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select class="form-select" name="expressShipment" required>
-            <option value="" disabled selected>Express Shipment?</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select class="form-select" name="installationIncluded" required>
-            <option value="" disabled selected>Installation Included?</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select class="form-select" name="transport" required>
-            <option value="" disabled selected>Transport</option>
-            <option>Airways</option>
-            <option>Roadways</option>
-            <option>Waterways</option>
-          </select>
-
-          <select class="form-select" name="fragile" required>
-            <option value="" disabled selected>Fragile?</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <select class="form-select" name="customerInformation" required>
-            <option value="" disabled selected>Customer Info</option>
-            <option>Wealthy</option>
-            <option>Working Class</option>
-          </select>
-
-          <select class="form-select" name="remoteLocation" required>
-            <option value="" disabled selected>Remote Location?</option>
-            <option>Yes</option>
-            <option>No</option>
-          </select>
-
-          <label for="scheduledDate" class="form-label">Schedule Date</label>
-<input type="date" class="form-control" name="scheduledDate" id="scheduledDate" required />
-
-<label for="deliveryDate" class="form-label">Delivery Date</label>
-<input type="date" class="form-control" name="deliveryDate" id="deliveryDate" required />
-          <input type="text" class="form-control" name="customerLocation" placeholder="Customer Location" required />
-
-          <button type="submit" class="btn btn-submit">Predict</button>
-        </form>
-      </div>
+  <div class="form-section">
+    <div class="form-text-side">
+      <div class="logo">
+        <img src="images/Accenture-Logo.png" width="500px" height="200px" alt="Accenture Logo" />
+      </div><br><br>
+      <h1>Unbox Smarter Shipping Decisions!</h1>
+      <p>Predict costs before they surprise you. Our intelligent tool helps you ship faster, smarter, and more affordably—no guesswork, just precision.</p>
+      <img src="images/img11.png" alt="Illustration of shipping boxes" class="form-img" />
     </div>
-  </body>
+
+    <div class="form-container">
+      <h2>Shipping Cost Prediction Form</h2>
+      <form action="/predict" method="post">
+
+        <fieldset>
+            <legend>Sculpture Details</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="customerId" name="customerId" placeholder=" " required />
+                      <label for="customerId"><i class="fa fa-id-card"></i> Customer ID</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="artistName" name="artistName" placeholder=" " required />
+                      <label for="artistName"><i class="fa fa-paintbrush"></i> Artist Name</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="artist" name="artist" placeholder=" " required />
+                      <label for="artist"><i class="fa fa-star"></i> Artist Reputation</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                        <i class="fas fa-cube"></i>
+                        <select class="form-select" id="material" name="material" required>
+                            <option value="" disabled selected>Select material</option>
+                            <option>Aluminium</option>
+                            <option>Marble</option>
+                            <option>Bronze</option>
+                            <option>Clay</option>
+                            <option>Brass</option>
+                            <option>Wood</option>
+                            <option>Stone</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="priceOfSculpture" name="priceOfSculpture" placeholder=" " required />
+                      <label for="priceOfSculpture"><i class="fa fa-tags"></i> Price of Sculpture</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Dimensions & Weight</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="height" name="height" placeholder=" " required />
+                      <label for="height"><i class="fa fa-arrows-alt-v"></i> Height (cm)</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="width" name="width" placeholder=" " required />
+                      <label for="width"><i class="fa fa-arrows-alt-h"></i> Width (cm)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="weight" name="weight" placeholder=" " required />
+                      <label for="weight"><i class="fa fa-weight-hanging"></i> Weight (kg)</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Shipping & Delivery Options</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="number" class="form-control" id="baseShippingPrice" name="baseShippingPrice" placeholder=" " required />
+                      <label for="baseShippingPrice"><i class="fa fa-truck"></i> Base Shipping Price</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-globe"></i>
+                    <select class="form-select" id="international" name="international" required>
+                      <option value="" disabled selected>International Shipment?</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                    <i class="fa fa-bolt"></i>
+                    <select class="form-select" id="expressShipment" name="expressShipment" required>
+                      <option value="" disabled selected>Express Shipment?</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-tools"></i>
+                    <select class="form-select" id="installationIncluded" name="installationIncluded" required>
+                      <option value="" disabled selected>Installation Included?</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-shuttle-van"></i>
+                    <select class="form-select" id="transport" name="transport" required>
+                      <option value="" disabled selected>Transport Mode</option>
+                      <option>Airways</option>
+                      <option>Roadways</option>
+                      <option>Waterways</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-exclamation-triangle"></i>
+                    <select class="form-select" id="fragile" name="fragile" required>
+                      <option value="" disabled selected>Fragile Item?</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Customer & Location Details</legend>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-user"></i>
+                    <select class="form-select" id="customerInformation" name="customerInformation" required>
+                      <option value="" disabled selected>Customer Information</option>
+                      <option>Wealthy</option>
+                      <option>Working Class</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="select-icon-wrapper mb-3">
+                      <i class="fa fa-map-marker-alt"></i>
+                    <select class="form-select" id="remoteLocation" name="remoteLocation" required>
+                      <option value="" disabled selected>Remote Location?</option>
+                      <option>Yes</option>
+                      <option>No</option>
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-floating mb-3">
+                      <input type="text" class="form-control" id="customerLocation" name="customerLocation" placeholder=" " required />
+                      <label for="customerLocation"><i class="fa fa-location-dot"></i> Customer Location (City, State)</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="scheduledDate" name="scheduledDate" placeholder=" " required />
+                      <label for="scheduledDate"><i class="fa fa-calendar-alt"></i> Scheduled Date</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-3">
+                      <input type="date" class="form-control" id="deliveryDate" name="deliveryDate" placeholder=" " required />
+                      <label for="deliveryDate"><i class="fa fa-truck-fast"></i> Delivery Date</label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <button type="submit" class="btn-submit">Predict Shipping Cost</button>
+      </form>
+    </div>
+  </div>
+
+</body>
 </html>
