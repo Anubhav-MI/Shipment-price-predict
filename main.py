@@ -72,3 +72,5 @@ async def predict(
     predicted_cost = 1234.56  # Mock value
 
     return {"estimated_cost": predicted_cost}
+#to start server
+# python -m uvicorn main:app --reload
