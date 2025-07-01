@@ -17,8 +17,8 @@ SCHEMA_FILE_PATH = os.path.join("data_schema", "schema.yaml")
 
 TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 
-MODEL_CONFIG_FILE = "config/model.yaml"
-SCHEMA_FILE_PATH = "config/schema.yaml"
+MODEL_CONFIG_FILE = "data_schema/model.yaml"
+SCHEMA_FILE_PATH = "data_schema/schema.yaml"
 
 
 # SAVED_MODEL_DIR =os.path.join("saved_models")
