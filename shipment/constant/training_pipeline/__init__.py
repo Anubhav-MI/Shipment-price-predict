@@ -60,3 +60,8 @@ TRANSFORMED_TEST_FILE_NAME: str = "transformed_test_data.npz"
 
 DATA_TRANSFORMATION_PREPROCESSOR_DIR: str = "preprocessor"
 PREPROCESSOR_OBJECT_FILE_NAME: str = "shipping_preprocessor.pkl"
+
+
+MODEL_TRAINER_ARTIFACTS_DIR = "ModelTrainerArtifacts"
+MODEL_FILE_NAME = "shipping_price_model.pkl"
+MODEL_SAVE_FORMAT = ".pkl"
