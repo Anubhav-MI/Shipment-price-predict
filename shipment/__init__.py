@@ -12,8 +12,8 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.utils import all_estimators
 from yaml import safe_dump
 from shipment.constant import *
-from shipment.exception import shippingException
-from shipment.logger import logging
+from shipment.exception.exception import ShipmentException
+from shipment.logging.logger import logging
 
 
 
@@ -29,7 +29,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def write_json_to_yaml_file(self, json_file: dict, yaml_file_path: str) -> yaml:
@@ -41,7 +41,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def save_numpy_array_data(self, file_path: str, array: np.array):
@@ -54,7 +54,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def load_numpy_array_data(self, file_path: str) -> np.array:
@@ -65,7 +65,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def get_tuned_model(
@@ -89,7 +89,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -103,7 +103,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -120,7 +120,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def get_model_params(
@@ -145,7 +145,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -163,7 +163,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -181,7 +181,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -195,7 +195,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -207,7 +207,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     @staticmethod
@@ -219,7 +219,7 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e
 
 
     def update_model_score(self, best_model_score: float) -> None:
@@ -233,4 +233,4 @@ class MainUtils:
 
 
         except Exception as e:
-            raise shippingException(e, sys) from e
+            raise ShipmentException(e, sys) from e

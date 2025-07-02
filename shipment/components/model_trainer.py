@@ -1,5 +1,5 @@
 import os
-from shipment.logger import logging
+from shipment.logging.logger import logging
 import sys
 import pandas as pd
 from typing import List, Tuple
@@ -10,7 +10,7 @@ from shipment.entity.artifacts_entity import (
     DataTransformationArtifacts,
     ModelTrainerArtifacts,
 )
-from shipment.exception import shippingException
+from shipment.exception.exception import ShipmentException
 
 
 class CostModel:
