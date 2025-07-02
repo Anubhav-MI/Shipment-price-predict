@@ -1,7 +1,5 @@
 from shipment.exception.exception import ShipmentException
 from shipment.logging.logger import logging
-
-
 from shipment.entity.config_entity import DataIngestionConfig
 from shipment.entity.artifacts_entity import DataIngestionArtifact
 import os

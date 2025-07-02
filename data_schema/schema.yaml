@@ -1,0 +1,66 @@
+columns:
+  - Customer Id: object
+  - Artist Name: object
+  - Artist Reputation: float64
+  - Height: float64
+  - Width: float64
+  - Weight: float64
+  - Material: object
+  - Price Of Sculpture: float64
+  - Base Shipping Price: float64
+  - International: object
+  - Express Shipment: object
+  - Installation Included: object
+  - Transport: object
+  - Fragile: object
+  - Customer Information: object
+  - Remote Location: object
+  - Scheduled Date: object
+  - Delivery Date: object
+  - Customer Location: object
+  - Cost: float64
+
+numerical_columns:
+  - Artist Reputation
+  - Height
+  - Width
+  - Weight
+  - Price Of Sculpture
+  - Base Shipping Price
+
+categorical_columns:
+  - Customer Id
+  - Artist Name
+  - Material
+  - International
+  - Express Shipment
+  - Installation Included
+  - Transport
+  - Fragile
+  - Customer Information
+  - Remote Location
+  - Scheduled Date
+  - Delivery Date
+  - Customer Location
+
+onehot_columns:
+  - Material
+  - International
+  - Express Shipment
+  - Installation Included
+  - Transport
+  - Fragile
+  - Customer Information
+  - Remote Location
+
+drop_columns:
+  - Customer Id
+  - Artist Name
+  - Customer Location
+  - Scheduled Date
+  - Delivery Date
+
+binary_columns:
+  - International
+
+target_column: Cost
