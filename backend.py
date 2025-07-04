@@ -5,7 +5,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from shipment.exception.exception import ShipmentException
 from shipment.logging.logger import logging
-from shipment.components.model_predictor import shippingData, CostPredictor
+# from shipment.components.model_predictor import shippingData, CostPredictor
 
 import os
 
@@ -13,7 +13,7 @@ app = FastAPI()
 
 # Mount templates
 templates = Jinja2Templates(directory=".")
-app.mount("/static", StaticFiles(directory="."), name="static")
+app.mount("/images", StaticFiles(directory="."), name="images")
 
 @app.get("/form", response_class=HTMLResponse)
 async def show_form(request: Request):

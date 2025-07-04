@@ -10,6 +10,8 @@ PyYAML
 joblib
 scipy
 threadpoolctl
-
-
+fastapi
+uvicorn
+jinja2
+python-multipart
 # -e.
