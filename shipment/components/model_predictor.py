@@ -110,6 +110,8 @@ class CostPredictor:
             return model
         except Exception as e:
             raise ShipmentException(e, sys)
+        
+        
 
     def predict(self, X: pd.DataFrame) -> list[float]:
         logging.info("Entered predict method of CostPredictor class")

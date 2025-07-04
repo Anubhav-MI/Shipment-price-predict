@@ -1,11 +1,13 @@
 python-dotenv
 dotenv
+dotenv
 pandas
 numpy>=1.23.0
 pymongo[srv]>=4.3
 certifi
 scikit-learn
 dill
+pyaml
 pyaml
 PyYAML
 joblib
