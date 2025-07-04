@@ -30,7 +30,6 @@ class ModelEvaluation:
         model = self.load_model()
         df = self.load_test_data()
 
-        # Drop irrelevant columns (adjust as needed for your project)
         drop_cols = ['Customer Id', 'Customer Information', 'Customer Location',
                      'Scheduled Date', 'Delivery Date', 'Artist Name']
         df = df.drop(columns=drop_cols, errors='ignore')
@@ -47,7 +46,7 @@ class ModelEvaluation:
         X_test = self.encode_categoricals(X_test)
 
         # TEMP: Limit features to dummy model (expects only 3)
-        USE_DUMMY_MODEL = True  # Set to False when using the real model
+        USE_DUMMY_MODEL = False  # Set to False when using the real model
 
         if USE_DUMMY_MODEL:
             try:
