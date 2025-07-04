@@ -62,6 +62,17 @@ if __name__ == '__main__':
             logging.info("Model training completed.")
             print(model_trainer_artifact)
 
+                    # 5. Model Evaluation ✅
+            from shipment.components.model_evaluation import ModelEvaluation
+            logging.info("Initiating model evaluation...")
+
+            model_eval = ModelEvaluation(
+                model_path=model_trainer_artifact.trained_model_file_path,
+                test_data_path=data_validation_artifact.valid_test_file_path
+            )
+            evaluation_result = model_eval.evaluate()
+            logging.info(f"Model Evaluation Metrics: {evaluation_result}")
+            print(f"✅ Model Evaluation Complete: {evaluation_result}")
         else:
             logging.warning("Skipping data transformation and model training due to failed validation.")
             print("⚠️ Skipping data transformation and model training due to failed validation.")
