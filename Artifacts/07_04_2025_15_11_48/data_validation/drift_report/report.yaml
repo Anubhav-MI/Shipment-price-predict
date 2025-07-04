@@ -1,5 +1,5 @@
 Artist Name:
-  drift_status: &id003 !!python/object/apply:numpy.core.multiarray.scalar
+  drift_status: &id003 !!python/object/apply:numpy._core.multiarray.scalar
   - &id001 !!python/object/apply:numpy.dtype
     args:
     - b1
@@ -16,31 +16,31 @@ Artist Name:
     - 0
   - !!binary |
     AQ==
-  p_value: 1.25e-321
+  p_value: 1.255e-321
 Artist Reputation:
-  drift_status: &id002 !!python/object/apply:numpy.core.multiarray.scalar
+  drift_status: &id002 !!python/object/apply:numpy._core.multiarray.scalar
   - *id001
   - !!binary |
     AA==
-  p_value: 0.5516500999776898
+  p_value: 0.369249334430307
 Base Shipping Price:
   drift_status: *id002
-  p_value: 0.9043346658243205
+  p_value: 0.5798987793112084
 Cost:
   drift_status: *id002
-  p_value: 0.7757298547301216
+  p_value: 0.652735837838265
 Customer Id:
   drift_status: *id003
   p_value: 1.245e-321
 Customer Information:
   drift_status: *id002
-  p_value: 1.0
+  p_value: 0.9999999987217387
 Customer Location:
   drift_status: *id003
   p_value: 1.245e-321
 Delivery Date:
   drift_status: *id003
-  p_value: 1.685795462036739e-178
+  p_value: 8.656944230459554e-174
 Express Shipment:
   drift_status: *id002
   p_value: 1.0
@@ -49,31 +49,31 @@ Fragile:
   p_value: 1.0
 Height:
   drift_status: *id002
-  p_value: 0.2990723696163719
+  p_value: 0.8284566056698087
 Installation Included:
   drift_status: *id002
-  p_value: 0.9465412794374337
+  p_value: 0.9832770510723982
 International:
   drift_status: *id002
-  p_value: 1.0
+  p_value: 0.9999999999998932
 Material:
   drift_status: *id002
-  p_value: 0.7048680968384433
+  p_value: 0.4519225519227243
 Price Of Sculpture:
   drift_status: *id002
   p_value: 0.4519225519227243
 Remote Location:
   drift_status: *id002
-  p_value: 0.9832770510723982
+  p_value: 0.9177555163351789
 Scheduled Date:
   drift_status: *id003
-  p_value: 8.777879281084987e-186
+  p_value: 2.755211669983788e-182
 Transport:
   drift_status: *id002
-  p_value: 0.19724776536562713
+  p_value: 0.9977783557765296
 Weight:
   drift_status: *id002
-  p_value: 0.13968595968120004
+  p_value: 0.489527942986739
 Width:
   drift_status: *id002
-  p_value: 0.5664896444312039
+  p_value: 0.4300145002029635
