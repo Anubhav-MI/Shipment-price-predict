@@ -74,6 +74,8 @@ class shippingData:
             raise ShipmentException(e, sys)
 
 
+
+
 class CostPredictor:
     def __init__(self, model_path: str = None):
         if model_path is None:
@@ -92,6 +94,8 @@ class CostPredictor:
             return model
         except Exception as e:
             raise ShipmentException(e, sys)
+        
+        
 
     def predict(self, X: pd.DataFrame) -> list[float]:
         """
