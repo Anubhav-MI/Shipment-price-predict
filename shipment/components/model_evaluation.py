@@ -5,15 +5,19 @@ from sklearn.preprocessing import LabelEncoder
 import os
 
 class ModelEvaluation:
-    def __init__(self, model_path, test_data_path):
+    def __init__(self, model_path: str, test_data_path: str):
         self.model_path = model_path
         self.test_data_path = test_data_path
 
     def load_model(self):
+        if not os.path.exists(self.model_path):
+            raise FileNotFoundError(f"❌ Model file not found at {self.model_path}")
         with open(self.model_path, 'rb') as f:
             return pickle.load(f)
 
     def load_test_data(self):
+        if not os.path.exists(self.test_data_path):
+            raise FileNotFoundError(f"❌ Test data not found at {self.test_data_path}")
         return pd.read_csv(self.test_data_path)
 
     def encode_categoricals(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -30,11 +34,12 @@ class ModelEvaluation:
         model = self.load_model()
         df = self.load_test_data()
 
+        # Drop unnecessary columns
         drop_cols = ['Customer Id', 'Customer Information', 'Customer Location',
                      'Scheduled Date', 'Delivery Date', 'Artist Name']
         df = df.drop(columns=drop_cols, errors='ignore')
 
-        df = df.dropna()  # Drop rows with missing values
+        df = df.dropna()
 
         if 'Cost' not in df.columns:
             raise ValueError("❌ 'Cost' column not found in test data.")
@@ -42,20 +47,15 @@ class ModelEvaluation:
         y_test = df['Cost']
         X_test = df.drop('Cost', axis=1)
 
-        # Encode categorical columns
         X_test = self.encode_categoricals(X_test)
 
-        # TEMP: Limit features to dummy model (expects only 3)
-        USE_DUMMY_MODEL = False  # Set to False when using the real model
+        # Prediction
+        try:
+            preds = model.predict(X_test)
+        except Exception as e:
+            raise RuntimeError(f"❌ Model prediction failed: {e}")
 
-        if USE_DUMMY_MODEL:
-            try:
-                X_test = X_test[['Height', 'Width', 'Weight']]
-            except KeyError:
-                raise ValueError("❌ Dummy model expects 'Height', 'Width', and 'Weight' in test data.")
-
-        # Predict and evaluate
-        preds = model.predict(X_test)
+        # Evaluation Metrics
         rmse = mean_squared_error(y_test, preds, squared=False)
         r2 = r2_score(y_test, preds)
 
@@ -64,3 +64,12 @@ class ModelEvaluation:
         print(f"R2 Score: {r2:.2f}")
 
         return {'rmse': rmse, 'r2_score': r2}
+
+
+if __name__ == "__main__":
+    # Set correct paths below
+    model_path = "shipment/artifacts/model.pkl"
+    test_data_path = "shipment/artifacts/test.csv"
+
+    evaluator = ModelEvaluation(model_path, test_data_path)
+    evaluator.evaluate()
