@@ -85,6 +85,17 @@ if __name__ == '__main__':
             else:
                 print(f"\n❌ Model file not found at: {model_path}. Cannot make prediction.")
 
+                    # 5. Model Evaluation ✅
+            from shipment.components.model_evaluation import ModelEvaluation
+            logging.info("Initiating model evaluation...")
+
+            model_eval = ModelEvaluation(
+                model_path=model_trainer_artifact.trained_model_file_path,
+                test_data_path=data_validation_artifact.valid_test_file_path
+            )
+            evaluation_result = model_eval.evaluate()
+            logging.info(f"Model Evaluation Metrics: {evaluation_result}")
+            print(f"✅ Model Evaluation Complete: {evaluation_result}")
         else:
             logging.warning("Skipping data transformation, model training, and prediction due to failed validation.")
             print("⚠️ Skipping data transformation, model training, and prediction due to failed validation.")

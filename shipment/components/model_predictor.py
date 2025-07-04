@@ -74,16 +74,33 @@ class shippingData:
             raise ShipmentException(e, sys)
 
 
-
-
 class CostPredictor:
     def __init__(self, model_path: str = None):
         if model_path is None:
-            self.model_path = os.path.join(
-                os.getcwd(), "artifacts", "ModelTrainerArtifacts", "shipping_price_model.pkl"
-            )
+            # Point to latest model inside saved_models
+            self.model_path = self.get_latest_model_path()
         else:
             self.model_path = model_path
+
+    def get_latest_model_path(self):
+        try:
+            saved_models_dir = os.path.join(os.getcwd(), "saved_models")
+            if not os.path.exists(saved_models_dir):
+                raise FileNotFoundError("❌ 'saved_models' directory does not exist.")
+            
+            models = [
+                os.path.join(saved_models_dir, f)
+                for f in os.listdir(saved_models_dir)
+                if f.endswith(".pkl")
+            ]
+            if not models:
+                raise FileNotFoundError("❌ No .pkl models found in saved_models directory.")
+
+            # Sort by modified time (latest first)
+            latest_model = sorted(models, key=os.path.getmtime, reverse=True)[0]
+            return latest_model
+        except Exception as e:
+            raise ShipmentException(e, sys)
 
     def load_model(self):
         try:
@@ -98,15 +115,11 @@ class CostPredictor:
         
 
     def predict(self, X: pd.DataFrame) -> list[float]:
-        """
-        Returns a list of predicted costs for the rows in X.
-        """
         logging.info("Entered predict method of CostPredictor class")
         try:
             model = self.load_model()
             predictions = model.predict(X)
             logging.info("Exited predict method of CostPredictor class")
-            # ensure Python floats
             return [float(p) for p in predictions]
         except Exception as e:
             raise ShipmentException(e, sys)

@@ -29,3 +29,8 @@ starlette
 sniffio
 exceptiongroup
 idna
+uvicorn
+jinja2
+python-multipart
+# -e.
+
