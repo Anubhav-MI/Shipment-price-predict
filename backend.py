@@ -19,6 +19,9 @@ app.mount("/images", StaticFiles(directory="."), name="images")
 @app.get("/form", response_class=HTMLResponse)
 async def show_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
+
+
+
 @app.get("/train")
 async def train_route():
     try:
@@ -26,6 +29,9 @@ async def train_route():
         return result
     except Exception as e:
         return {"error": str(e)}
+
+
+
 
 @app.post("/predict")
 async def predict(
