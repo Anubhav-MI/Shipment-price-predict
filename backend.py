@@ -4,8 +4,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from shipment.exception.exception import ShipmentException
+from shipment.pipeline.training_pipeline import run_training_pipeline
 from shipment.logging.logger import logging
-# from shipment.components.model_predictor import shippingData, CostPredictor
+from shipment.components.model_predictor import shippingData, CostPredictor
 
 import os
 
@@ -18,19 +19,13 @@ app.mount("/images", StaticFiles(directory="."), name="images")
 @app.get("/form", response_class=HTMLResponse)
 async def show_form(request: Request):
     return templates.TemplateResponse("form.html", {"request": request})
-
-# @app.get("/train")
-# async def trainRouteClient():
-#     try:
-#         train_pipeline = TrainPipeline()
-
-#         train_pipeline.run_pipeline()
-
-#         return Response("Training successful !!")
-
-#     except Exception as e:
-#         return Response(f"Error Occurred! {e}")
-
+@app.get("/train")
+async def train_route():
+    try:
+        result = run_training_pipeline()
+        return result
+    except Exception as e:
+        return {"error": str(e)}
 
 @app.post("/predict")
 async def predict(
