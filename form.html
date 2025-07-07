@@ -1,31 +1,258 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Sculpture Delivery Cost Estimation</title>
-  </head>
-  <body>
-    <h2>Enter Sculpture and Customer Information</h2>
-    <form action="/predict" method="post">
-      Customer ID: <input type="text" name="Customer Id" /><br /><br />
-      Artist Name: <input type="text" name="Artist Name" /><br /><br />
-      Artist Reputation: <input type="number" step="any" name="Artist Reputation" /><br /><br />
-      Height (cm): <input type="number" step="any" name="Height" /><br /><br />
-      Width (cm): <input type="number" step="any" name="Width" /><br /><br />
-      Weight (kg): <input type="number" step="any" name="Weight" /><br /><br />
-      Material: <input type="text" name="Material" /><br /><br />
-      Price Of Sculpture: <input type="number" step="any" name="Price Of Sculpture" /><br /><br />
-      Base Shipping Price: <input type="number" step="any" name="Base Shipping Price" /><br /><br />
-      International (Yes/No): <input type="text" name="International" /><br /><br />
-      Express Shipment (Yes/No): <input type="text" name="Express Shipment" /><br /><br />
-      Installation Included (Yes/No): <input type="text" name="Installation Included" /><br /><br />
-      Transport: <input type="text" name="Transport" /><br /><br />
-      Fragile (Yes/No): <input type="text" name="Fragile" /><br /><br />
-      Customer Information: <input type="text" name="Customer Information" /><br /><br />
-      Remote Location (Yes/No): <input type="text" name="Remote Location" /><br /><br />
-      Scheduled Date (YYYY-MM-DD): <input type="date" name="Scheduled Date" /><br /><br />
-      Delivery Date (YYYY-MM-DD): <input type="date" name="Delivery Date" /><br /><br />
-      Customer Location: <input type="text" name="Customer Location" /><br /><br />
-      <input type="submit" value="Estimate Cost" />
-    </form>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shipping Cost Prediction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .flip-card {
+      perspective: 2000px;
+      transition: height 0.5s ease;
+    }
+
+    .flip-inner {
+      transition: transform 0.8s ease-in-out;
+      transform-style: preserve-3d;
+      position: relative;
+    }
+
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-front, .flip-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .flip-front {
+      position: relative;
+    }
+
+    .flip-card:not(.flipped) .flip-back {
+      display: none;
+    }
+
+    .flip-card.flipped .flip-front {
+      display: none;
+    }
+
+    .flip-back {
+      transform: rotateY(180deg);
+      position: relative;
+    }
+
+    .input-field {
+      background-color: #1f2937;
+      color: white;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      outline: none;
+      border: none;
+      appearance: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .input-field::placeholder {
+      color: #9ca3af;
+    }
+
+    .input-field:focus {
+      box-shadow: 0 0 0 2px #c084fc;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-800 via-violet-900 to-gray-900 min-h-screen text-white font-sans">
+
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-50 bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-purple-400">ShipSmart</div>
+      <ul class="flex space-x-6 text-lg font-medium text-gray-300">
+        <li><a href="#home" class="hover:text-white transition">Home</a></li>
+        <li><a href="#predict" class="hover:text-white transition">Predict</a></li>
+        <li><a href="#team" class="hover:text-white transition">Team</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="max-w-7xl mx-auto px-4 py-20">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8">
+        <h1 class="text-5xl font-extrabold leading-tight text-white">
+          Simplify Your <span class="text-purple-400">Shipping</span> Process
+        </h1>
+        <p class="text-lg text-gray-300">
+          Our AI-powered solution ensures accurate shipping cost predictions, helping artists and vendors plan smarter with confidence.
+        </p>
+        <a href="#predict" class="inline-block px-8 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl font-semibold transition text-white">Get Started</a>
+      </div>
+      <div>
+        <img src="static/images/ship.png" alt="Shipping Illustration" class="w-full" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Predict Section -->
+  <section id="predict" class="max-w-7xl mx-auto px-4 py-10 relative">
+    <div class="flip-card w-full" id="flipCard">
+      <div class="flip-inner w-full h-full">
+
+        <!-- Front Side -->
+        <div class="flip-front bg-gray-950 bg-opacity-90 p-10 rounded-2xl shadow-md border border-purple-600 space-y-6">
+          <h2 class="text-3xl font-bold text-purple-300 text-center">Ready to Predict?</h2>
+          <p class="text-center text-gray-300">Click below to access the shipping cost prediction form.</p>
+          <div class="flex justify-center">
+            <button onclick="flipCard()" class="px-6 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl text-white font-bold transition">
+              Start Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Back Side (Form) -->
+        <div class="flip-back bg-gray-950 bg-opacity-90 p-8 rounded-2xl shadow-md border border-purple-600 space-y-6">
+          <h2 class="text-2xl font-semibold text-center text-purple-300">Shipping Cost Prediction Form</h2>
+
+          <form id="predictForm" action="/predict" method="post" class="space-y-6">
+            <!-- Sculpture Details -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Sculpture Details</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input name="customerId" placeholder="Customer ID" required class="input-field" />
+                <input name="artistName" placeholder="Artist Name" required class="input-field" />
+                <input type="number" name="artist" placeholder="Artist Reputation" required class="input-field" />
+                <select name="material" required class="input-field">
+                  <option value="" disabled selected>Select Material</option>
+                  <option>Aluminium</option><option>Marble</option><option>Bronze</option>
+                  <option>Clay</option><option>Brass</option><option>Wood</option><option>Stone</option>
+                </select>
+                <input type="number" name="priceOfSculpture" placeholder="Price of Sculpture" required class="input-field col-span-2" />
+              </div>
+            </fieldset>
+
+            <!-- Dimensions & Weight -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Dimensions & Weight</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input type="number" name="height" placeholder="Height (cm)" required class="input-field" />
+                <input type="number" name="width" placeholder="Width (cm)" required class="input-field" />
+                <input type="number" name="weight" placeholder="Weight (kg)" required class="input-field col-span-2" />
+              </div>
+            </fieldset>
+
+            <!-- Shipping & Delivery -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Shipping & Delivery</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input type="number" name="baseShippingPrice" placeholder="Base Shipping Price" required class="input-field" />
+                <select name="international" required class="input-field">
+                  <option value="" disabled selected>International Shipment?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="expressShipment" required class="input-field">
+                  <option value="" disabled selected>Express Shipment?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="installationIncluded" required class="input-field">
+                  <option value="" disabled selected>Installation Included?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="transport" required class="input-field">
+                  <option value="" disabled selected>Transport Mode</option>
+                  <option>Airways</option><option>Roadways</option><option>Waterways</option>
+                </select>
+                <select name="fragile" required class="input-field">
+                  <option value="" disabled selected>Fragile Item?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- Customer & Location -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Customer & Location</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <select name="customerInformation" required class="input-field">
+                  <option value="" disabled selected>Customer Info</option>
+                  <option>Wealthy</option><option>Working Class</option>
+                </select>
+                <select name="remoteLocation" required class="input-field">
+                  <option value="" disabled selected>Remote Location?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <input name="customerLocation" placeholder="Customer Location (City, State)" required class="input-field col-span-2" />
+                <input type="date" name="scheduledDate" required class="input-field" />
+                <input type="date" name="deliveryDate" required class="input-field" />
+              </div>
+            </fieldset>
+
+            <div class="flex justify-between items-center">
+              <button type="button" onclick="flipCard()" class="text-sm text-purple-400 underline hover:text-purple-300 transition">← Go Back</button>
+              <button type="submit" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-xl transition">
+                Predict Shipping Cost
+              </button>
+            </div>
+          </form>
+
+          <!-- Result Display -->
+          <div id="resultDisplay" class="hidden text-center py-10">
+            <h3 class="text-2xl font-bold text-green-400 mb-4">Predicted Shipping Cost</h3>
+            <p id="costOutput" class="text-4xl font-extrabold text-white"></p>
+            <button onclick="resetForm()" class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl text-white font-semibold transition">
+              Predict Another
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function flipCard() {
+      document.getElementById("flipCard").classList.toggle("flipped");
+    }
+
+    const form = document.getElementById("predictForm");
+    const resultDisplay = document.getElementById("resultDisplay");
+    const costOutput = document.getElementById("costOutput");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      fetch("/predict", {
+        method: "POST",
+        body: new FormData(form)
+      })
+      .then(res => res.json())
+      .then(data => {
+        costOutput.textContent = `₹ ${data.estimated_shipping_cost.toFixed(2)}`;
+        form.classList.add("hidden");
+        resultDisplay.classList.remove("hidden");
+      })
+      .catch(() => {
+        costOutput.textContent = "Something went wrong.";
+        form.classList.add("hidden");
+        resultDisplay.classList.remove("hidden");
+      });
+    });
+
+    function resetForm() {
+      form.reset();
+      form.classList.remove("hidden");
+      resultDisplay.classList.add("hidden");
+    }
+  </script>
+
+</body>
 </html>

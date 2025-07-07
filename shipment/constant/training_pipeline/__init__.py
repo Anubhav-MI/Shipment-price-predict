@@ -15,6 +15,12 @@ TEST_FILE_NAME: str = "test.csv"
 
 SCHEMA_FILE_PATH = os.path.join("data_schema", "schema.yaml")
 
+TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
+
+MODEL_CONFIG_FILE = "data_schema/model.yaml"
+SCHEMA_FILE_PATH = "data_schema/schema.yaml"
+
+
 # SAVED_MODEL_DIR =os.path.join("saved_models")
 # MODEL_FILE_NAME = "model.pkl"
 
@@ -54,3 +60,8 @@ TRANSFORMED_TEST_FILE_NAME: str = "transformed_test_data.npz"
 
 DATA_TRANSFORMATION_PREPROCESSOR_DIR: str = "preprocessor"
 PREPROCESSOR_OBJECT_FILE_NAME: str = "shipping_preprocessor.pkl"
+
+
+MODEL_TRAINER_ARTIFACTS_DIR = "ModelTrainerArtifacts"
+MODEL_FILE_NAME = "shipping_price_model.pkl"
+MODEL_SAVE_FORMAT = ".pkl"

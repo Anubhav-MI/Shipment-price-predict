@@ -123,13 +123,27 @@ class DataTransformationConfig:
             training_pipeline.DATA_TRANSFORMATION_PREPROCESSOR_DIR,
             training_pipeline.PREPROCESSOR_OBJECT_FILE_NAME
         )
+        
+class ModelTrainerConfig:
+    def __init__(self, training_pipeline_config):
+        self.model_trainer_dir = os.path.join(
+            training_pipeline_config.artifact_dir,
+            training_pipeline.MODEL_TRAINER_ARTIFACTS_DIR
+        )
 
-        # # Utility and Schema
-        # self.UTILS = MainUtils()
-        # self.SCHEMA_CONFIG = self.UTILS.read_yaml_file(SCHEMA_FILE_PATH)
+        # Path to save the trained model (e.g., a pickle file)
+        self.trained_model_file_path = os.path.join(
+            self.model_trainer_dir,
+            training_pipeline.MODEL_FILE_NAME
+        )
 
-        # # For saving in initiate_data_transformation()
-        # self.TRANSFORMED_TRAIN_DATA_DIR = os.path.dirname(self.transformed_train_file_path)
-        # self.TRANSFORMED_TEST_DATA_DIR = os.path.dirname(self.transformed_test_file_path)
-        # self.PREPROCESSOR_FILE_PATH = self.preprocessor_object_file_path
+        # Path to preprocessor object (created during Data Transformation)
+        self.preprocessor_object_file_path = os.path.join(
+            training_pipeline_config.artifact_dir,
+            training_pipeline.DATA_TRANSFORMATION_DIR_NAME,
+            training_pipeline.DATA_TRANSFORMATION_PREPROCESSOR_DIR,
+            training_pipeline.PREPROCESSOR_OBJECT_FILE_NAME
+        )
 
+        # # Utility object for saving/loading files
+        self.UTILS = MainUtils()
