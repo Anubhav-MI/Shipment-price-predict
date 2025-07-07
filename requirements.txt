@@ -1,5 +1,8 @@
+setuptools>=65.5.0
+wheel
+build
+
 python-dotenv
-dotenv
 pandas
 numpy==1.23.5
 pymongo[srv]==4.3.3
@@ -32,5 +35,3 @@ idna
 uvicorn==0.22.0
 jinja2
 python-multipart
-setuptools>=65.5.0
-wheel
