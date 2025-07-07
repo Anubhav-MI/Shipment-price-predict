@@ -1,628 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Shipping Cost Prediction</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        background-image: url("{{ url_for('static', path='images/img12.jpg') }}");
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        overflow-x: hidden;
-      }
-      .select-icon-wrapper {
-        position: relative;
-        margin-bottom: 1rem;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shipping Cost Prediction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
 
-      .select-icon-wrapper i {
-        position: absolute;
-        top: 50%;
-        left: 15px;
-        transform: translateY(-50%);
-        pointer-events: none;
-        color: #161616;
-        transition: color 0.3s ease;
-        font-size: 1.1em;
-      }
+    .flip-card {
+      perspective: 2000px;
+      transition: height 0.5s ease;
+    }
 
-      .select-icon-wrapper select {
-        padding-left: 40px;
-      }
+    .flip-inner {
+      transition: transform 0.8s ease-in-out;
+      transform-style: preserve-3d;
+      position: relative;
+    }
 
-      .form-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        min-height: 100vh;
-        padding: 60px 80px;
-        box-sizing: border-box;
-        gap: 40px;
-        flex-wrap: wrap;
-      }
+    .flip-card.flipped .flip-inner {
+      transform: rotateY(180deg);
+    }
 
-      .form-text-side {
-        flex: 1;
-        max-width: 600px;
-        padding-right: 20px;
-        text-align: left;
-        opacity: 0;
-        transform: translateX(-50px);
-        animation: fadeInSlideLeft 1s ease-out forwards;
-      }
+    .flip-front, .flip-back {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
 
-      .form-text-side h1 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 15px;
-        color: #a100ff;
-      }
+    .flip-front {
+      position: relative;
+    }
 
-      .form-text-side p {
-        color: #060606;
-        font-size: 16px;
-      }
+    .flip-card:not(.flipped) .flip-back {
+      display: none;
+    }
 
-      .logo {
-        margin-top: -300px;
-        animation: logoScaleIn 0.8s ease-out forwards;
-        display: flex;
-      }
+    .flip-card.flipped .flip-front {
+      display: none;
+    }
 
-      .form-img {
-        margin-top: 20px;
-        max-width: 100%;
-      }
+    .flip-back {
+      transform: rotateY(180deg);
+      position: relative;
+    }
 
-      .form-container {
-        flex: 1;
-        max-width: 700px;
-        padding: 30px;
-        border-radius: 20px;
-        background-color: rgba(38, 37, 37, 0.139);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.808);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 2px solid rgba(49, 47, 47, 0.228);
-        /* Animation */
-        opacity: 0;
-        transform: translateX(50px);
-        animation: fadeInSlideRight 1s ease-out forwards;
-        animation-delay: 0.2s;
-      }
+    .input-field {
+      background-color: #1f2937;
+      color: white;
+      width: 100%;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      outline: none;
+      border: none;
+      appearance: none;
+      transition: all 0.3s ease-in-out;
+    }
 
-      .form-container h2 {
-        color: #fff;
-        margin-bottom: 25px;
-        text-align: center;
-        font-weight: bold;
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
-      }
+    .input-field::placeholder {
+      color: #9ca3af;
+    }
 
-      .form-floating > label {
-        color: #000000;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 0.9em;
-      }
+    .input-field:focus {
+      box-shadow: 0 0 0 2px #c084fc;
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-purple-800 via-violet-900 to-gray-900 min-h-screen text-white font-sans">
 
-      .form-select,
-      .form-control {
-        border-radius: 20px;
-        background-color: #f5f5f5;
-        color: #000;
-        max-height: 90px;
-        padding: 10px 15px 10px 40px;
-        font-size: 0.9em;
-        transition: all 0.3s ease;
-      }
+  <!-- Navbar -->
+  <nav class="sticky top-0 z-50 bg-gray-900 bg-opacity-90 backdrop-blur-md shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <div class="text-2xl font-bold text-purple-400">ShipSmart</div>
+      <ul class="flex space-x-6 text-lg font-medium text-gray-300">
+        <li><a href="#home" class="hover:text-white transition">Home</a></li>
+        <li><a href="#predict" class="hover:text-white transition">Predict</a></li>
+        <li><a href="#team" class="hover:text-white transition">Team</a></li>
+      </ul>
+    </div>
+  </nav>
 
-      .form-select:focus,
-      .form-control:focus {
-        border-color: #ffffff;
-        box-shadow: 0 0 0 0.25rem rgba(252, 252, 252, 0.146);
-        background-color: #ffffff;
-      }
-
-      .form-floating input:focus ~ label,
-      .form-floating input:not(:placeholder-shown) ~ label,
-      .form-floating select:focus ~ label,
-      .form-floating select:not([value=""]) ~ label,
-      .form-floating .form-control:valid ~ label,
-      .form-floating .form-select:valid ~ label {
-        transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem);
-        color: #7605ab;
-      }
-
-      .btn-submit {
-        background-color: #a100ff;
-        color: #fff;
-        border: none;
-        padding: 12px;
-        border-radius: 20px;
-        width: 100%;
-        font-weight: bold;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease,
-          box-shadow 0.3s ease;
-      }
-
-      .btn-submit:hover {
-        background-color: #444444;
-        color: #c5c5c5;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-      }
-
-      fieldset {
-        border: 1px solid rgba(149, 147, 147, 0.03);
-        border-radius: 10px;
-        padding: 20px;
-        margin-bottom: 25px;
-        box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.454);
-      }
-
-      legend {
-        color: #e0e0e0;
-        font-size: 1.3em;
-        font-weight: bold;
-        padding: 0 10px;
-        margin-bottom: 15px;
-        width: auto;
-        border-bottom: none;
-        text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
-      }
-
-      .row > div > .mb-3 {
-        margin-bottom: 1rem !important;
-      }
-
-      @keyframes fadeInSlideLeft {
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes fadeInSlideRight {
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      @keyframes logoScaleIn {
-        from {
-          transform: scale(0.8);
-          opacity: 0;
-        }
-        to {
-          transform: scale(1);
-          opacity: 1;
-        }
-      }
-
-      @media (max-width: 992px) {
-        .form-section {
-          flex-direction: column;
-          padding: 40px 20px;
-        }
-
-        .form-text-side,
-        .form-container {
-          max-width: 100%;
-          padding: 0;
-          transform: translateX(0);
-          opacity: 1;
-          animation: none;
-        }
-        @keyframes mobileFadeIn {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .form-text-side,
-        .form-container {
-          animation: mobileFadeIn 0.8s ease-out forwards;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .row .col-md-6 {
-          flex: 0 0 100%;
-          max-width: 100%;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="form-section">
-      <div class="form-text-side">
-        <div class="logo">
-          <img
-            src="{{ url_for('static', path='images/Accenture-Logo.png') }}"
-            width="500px"
-            height="260px"
-            alt="Accenture Logo"
-          />
-        </div>
-        <br /><br />
-        <h1>Unbox Smarter Shipping Decisions!</h1>
-        <p>
-          Predict costs before they surprise you. Our intelligent tool helps you
-          ship faster, smarter, and more affordably—no guesswork, just
-          precision.
+  <!-- Home Section -->
+  <section id="home" class="max-w-7xl mx-auto px-4 py-20">
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <div class="space-y-8">
+        <h1 class="text-5xl font-extrabold leading-tight text-white">
+          Simplify Your <span class="text-purple-400">Shipping</span> Process
+        </h1>
+        <p class="text-lg text-gray-300">
+          Our AI-powered solution ensures accurate shipping cost predictions, helping artists and vendors plan smarter with confidence.
         </p>
-        <img
-          src="{{ url_for('static', path='images/img11.png') }}"
-          alt="Illustration of shipping boxes"
-          class="form-img"
-        />
+        <a href="#predict" class="inline-block px-8 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl font-semibold transition text-white">Get Started</a>
       </div>
-
-      <div class="form-container">
-        <h2>Shipping Cost Prediction Form</h2>
-        <form action="/predict" method="post">
-          <fieldset>
-            <legend>Sculpture Details</legend>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="customerId"
-                    name="customerId"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="customerId"
-                    ><i class="fa fa-id-card"></i> Customer ID</label
-                  >
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="artistName"
-                    name="artistName"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="artistName"
-                    ><i class="fa fa-paintbrush"></i> Artist Name</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="artist"
-                    name="artist"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="artist"
-                    ><i class="fa fa-star"></i> Artist Reputation</label
-                  >
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fas fa-cube"></i>
-                  <select
-                    class="form-select"
-                    id="material"
-                    name="material"
-                    required
-                  >
-                    <option value="" disabled selected>Select material</option>
-                    <option>Aluminium</option>
-                    <option>Marble</option>
-                    <option>Bronze</option>
-                    <option>Clay</option>
-                    <option>Brass</option>
-                    <option>Wood</option>
-                    <option>Stone</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="priceOfSculpture"
-                    name="priceOfSculpture"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="priceOfSculpture"
-                    ><i class="fa fa-tags"></i> Price of Sculpture</label
-                  >
-                </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Dimensions & Weight</legend>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="height"
-                    name="height"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="height"
-                    ><i class="fa fa-arrows-alt-v"></i> Height (cm)</label
-                  >
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="width"
-                    name="width"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="width"
-                    ><i class="fa fa-arrows-alt-h"></i> Width (cm)</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="weight"
-                    name="weight"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="weight"
-                    ><i class="fa fa-weight-hanging"></i> Weight (kg)</label
-                  >
-                </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Shipping & Delivery Options</legend>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="baseShippingPrice"
-                    name="baseShippingPrice"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="baseShippingPrice"
-                    ><i class="fa fa-truck"></i> Base Shipping Price</label
-                  >
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-globe"></i>
-                  <select
-                    class="form-select"
-                    id="international"
-                    name="international"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      International Shipment?
-                    </option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-bolt"></i>
-                  <select
-                    class="form-select"
-                    id="expressShipment"
-                    name="expressShipment"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      Express Shipment?
-                    </option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-tools"></i>
-                  <select
-                    class="form-select"
-                    id="installationIncluded"
-                    name="installationIncluded"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      Installation Included?
-                    </option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-shuttle-van"></i>
-                  <select
-                    class="form-select"
-                    id="transport"
-                    name="transport"
-                    required
-                  >
-                    <option value="" disabled selected>Transport Mode</option>
-                    <option>Airways</option>
-                    <option>Roadways</option>
-                    <option>Waterways</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-exclamation-triangle"></i>
-                  <select
-                    class="form-select"
-                    id="fragile"
-                    name="fragile"
-                    required
-                  >
-                    <option value="" disabled selected>Fragile Item?</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <fieldset>
-            <legend>Customer & Location Details</legend>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-user"></i>
-                  <select
-                    class="form-select"
-                    id="customerInformation"
-                    name="customerInformation"
-                    required
-                  >
-                    <option value="" disabled selected>
-                      Customer Information
-                    </option>
-                    <option>Wealthy</option>
-                    <option>Working Class</option>
-                  </select>
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="select-icon-wrapper mb-3">
-                  <i class="fa fa-map-marker-alt"></i>
-                  <select
-                    class="form-select"
-                    id="remoteLocation"
-                    name="remoteLocation"
-                    required
-                  >
-                    <option value="" disabled selected>Remote Location?</option>
-                    <option>Yes</option>
-                    <option>No</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-floating mb-3">
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="customerLocation"
-                    name="customerLocation"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="customerLocation"
-                    ><i class="fa fa-location-dot"></i> Customer Location (City,
-                    State)</label
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="scheduledDate"
-                    name="scheduledDate"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="scheduledDate"
-                    ><i class="fa fa-calendar-alt"></i> Scheduled Date</label
-                  >
-                </div>
-              </div>
-              <div class="col-md-6">
-                <div class="form-floating mb-3">
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="deliveryDate"
-                    name="deliveryDate"
-                    placeholder=" "
-                    required
-                  />
-                  <label for="deliveryDate"
-                    ><i class="fa fa-truck-fast"></i> Delivery Date</label
-                  >
-                </div>
-              </div>
-            </div>
-          </fieldset>
-
-          <button type="submit" class="btn-submit">
-            Predict Shipping Cost
-          </button>
-        </form>
+      <div>
+        <img src="static/images/ship.png" alt="Shipping Illustration" class="w-full" />
       </div>
     </div>
-  </body>
+  </section>
+
+  <!-- Predict Section -->
+  <section id="predict" class="max-w-7xl mx-auto px-4 py-10 relative">
+    <div class="flip-card w-full" id="flipCard">
+      <div class="flip-inner w-full h-full">
+
+        <!-- Front Side -->
+        <div class="flip-front bg-gray-950 bg-opacity-90 p-10 rounded-2xl shadow-md border border-purple-600 space-y-6">
+          <h2 class="text-3xl font-bold text-purple-300 text-center">Ready to Predict?</h2>
+          <p class="text-center text-gray-300">Click below to access the shipping cost prediction form.</p>
+          <div class="flex justify-center">
+            <button onclick="flipCard()" class="px-6 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl text-white font-bold transition">
+              Start Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Back Side (Form) -->
+        <div class="flip-back bg-gray-950 bg-opacity-90 p-8 rounded-2xl shadow-md border border-purple-600 space-y-6">
+          <h2 class="text-2xl font-semibold text-center text-purple-300">Shipping Cost Prediction Form</h2>
+
+          <form id="predictForm" action="/predict" method="post" class="space-y-6">
+            <!-- Sculpture Details -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Sculpture Details</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input name="customerId" placeholder="Customer ID" required class="input-field" />
+                <input name="artistName" placeholder="Artist Name" required class="input-field" />
+                <input type="number" name="artist" placeholder="Artist Reputation" required class="input-field" />
+                <select name="material" required class="input-field">
+                  <option value="" disabled selected>Select Material</option>
+                  <option>Aluminium</option><option>Marble</option><option>Bronze</option>
+                  <option>Clay</option><option>Brass</option><option>Wood</option><option>Stone</option>
+                </select>
+                <input type="number" name="priceOfSculpture" placeholder="Price of Sculpture" required class="input-field col-span-2" />
+              </div>
+            </fieldset>
+
+            <!-- Dimensions & Weight -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Dimensions & Weight</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input type="number" name="height" placeholder="Height (cm)" required class="input-field" />
+                <input type="number" name="width" placeholder="Width (cm)" required class="input-field" />
+                <input type="number" name="weight" placeholder="Weight (kg)" required class="input-field col-span-2" />
+              </div>
+            </fieldset>
+
+            <!-- Shipping & Delivery -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Shipping & Delivery</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <input type="number" name="baseShippingPrice" placeholder="Base Shipping Price" required class="input-field" />
+                <select name="international" required class="input-field">
+                  <option value="" disabled selected>International Shipment?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="expressShipment" required class="input-field">
+                  <option value="" disabled selected>Express Shipment?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="installationIncluded" required class="input-field">
+                  <option value="" disabled selected>Installation Included?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <select name="transport" required class="input-field">
+                  <option value="" disabled selected>Transport Mode</option>
+                  <option>Airways</option><option>Roadways</option><option>Waterways</option>
+                </select>
+                <select name="fragile" required class="input-field">
+                  <option value="" disabled selected>Fragile Item?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+              </div>
+            </fieldset>
+
+            <!-- Customer & Location -->
+            <fieldset class="space-y-4">
+              <legend class="text-lg font-bold text-white border-b pb-1">Customer & Location</legend>
+              <div class="grid md:grid-cols-2 gap-4">
+                <select name="customerInformation" required class="input-field">
+                  <option value="" disabled selected>Customer Info</option>
+                  <option>Wealthy</option><option>Working Class</option>
+                </select>
+                <select name="remoteLocation" required class="input-field">
+                  <option value="" disabled selected>Remote Location?</option>
+                  <option>Yes</option><option>No</option>
+                </select>
+                <input name="customerLocation" placeholder="Customer Location (City, State)" required class="input-field col-span-2" />
+                <input type="date" name="scheduledDate" required class="input-field" />
+                <input type="date" name="deliveryDate" required class="input-field" />
+              </div>
+            </fieldset>
+
+            <div class="flex justify-between items-center">
+              <button type="button" onclick="flipCard()" class="text-sm text-purple-400 underline hover:text-purple-300 transition">← Go Back</button>
+              <button type="submit" class="bg-purple-600 hover:bg-purple-800 text-white font-bold py-3 px-6 rounded-xl transition">
+                Predict Shipping Cost
+              </button>
+            </div>
+          </form>
+
+          <!-- Result Display -->
+          <div id="resultDisplay" class="hidden text-center py-10">
+            <h3 class="text-2xl font-bold text-green-400 mb-4">Predicted Shipping Cost</h3>
+            <p id="costOutput" class="text-4xl font-extrabold text-white"></p>
+            <button onclick="resetForm()" class="mt-6 px-6 py-3 bg-purple-600 hover:bg-purple-800 rounded-xl text-white font-semibold transition">
+              Predict Another
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function flipCard() {
+      document.getElementById("flipCard").classList.toggle("flipped");
+    }
+
+    const form = document.getElementById("predictForm");
+    const resultDisplay = document.getElementById("resultDisplay");
+    const costOutput = document.getElementById("costOutput");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      fetch("/predict", {
+        method: "POST",
+        body: new FormData(form)
+      })
+      .then(res => res.json())
+      .then(data => {
+        costOutput.textContent = `₹ ${data.estimated_shipping_cost.toFixed(2)}`;
+        form.classList.add("hidden");
+        resultDisplay.classList.remove("hidden");
+      })
+      .catch(() => {
+        costOutput.textContent = "Something went wrong.";
+        form.classList.add("hidden");
+        resultDisplay.classList.remove("hidden");
+      });
+    });
+
+    function resetForm() {
+      form.reset();
+      form.classList.remove("hidden");
+      resultDisplay.classList.add("hidden");
+    }
+  </script>
+
+</body>
 </html>
