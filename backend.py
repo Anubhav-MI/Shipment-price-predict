@@ -14,7 +14,7 @@ app = FastAPI()
 
 # Mount templates
 templates = Jinja2Templates(directory=".")
-app.mount("/images", StaticFiles(directory="."), name="images")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/form", response_class=HTMLResponse)
 async def show_form(request: Request):

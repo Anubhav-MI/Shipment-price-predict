@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Shipping Cost Prediction</title>
-
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -13,13 +12,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-
     <style>
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-image: url("images/img12.jpg");
+        background-image: url("{{ url_for('static', path='images/img12.jpg') }}");
         background-repeat: no-repeat;
         background-size: cover;
         background-position: center;
@@ -259,7 +257,7 @@
       <div class="form-text-side">
         <div class="logo">
           <img
-            src="images/Accenture-Logo.png"
+            src="{{ url_for('static', path='images/Accenture-Logo.png') }}"
             width="500px"
             height="260px"
             alt="Accenture Logo"
@@ -273,7 +271,7 @@
           precision.
         </p>
         <img
-          src="images/img11.png"
+          src="{{ url_for('static', path='images/img11.png') }}"
           alt="Illustration of shipping boxes"
           class="form-img"
         />
