@@ -32,3 +32,5 @@ idna
 uvicorn==0.22.0
 jinja2
 python-multipart
+setuptools>=65.5.0
+wheel
