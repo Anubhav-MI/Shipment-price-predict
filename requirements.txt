@@ -9,7 +9,8 @@ dill
 pyaml
 PyYAML
 joblib
-scipy
+scipy==1.9.3
+python-3.10.13
 threadpoolctl
 xgboost
 category_encoders
