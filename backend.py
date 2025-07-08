@@ -1,24 +1,34 @@
-# app.py
-from fastapi import FastAPI, Form, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI, Request, Form
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from shipment.exception.exception import ShipmentException
-from shipment.pipeline.training_pipeline import run_training_pipeline
-from shipment.logging.logger import logging
-from shipment.components.model_predictor import shippingData, CostPredictor
+from fastapi.templating import Jinja2Templates
+import pandas as pd
+import numpy as np
+import pickle
+from datetime import datetime
+import uvicorn
+from shipment.pipeline.training_pipeline import run_training_pipeline  # Assuming this is your training script
 
 import os
 
+
+# Load trained model pipeline
+with open("saved_models/shipping_price_model.pkl", "rb") as f:
+    pipeline = pickle.load(f)
+
+# Initialize FastAPI app
 app = FastAPI()
 
-# Mount templates
-templates = Jinja2Templates(directory=".")
+# Mount static files (images, CSS, JS, etc.)
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
+# Set up Jinja2 templates
+templates = Jinja2Templates(directory="templates")
+# Define the root route
 
 @app.get("/form", response_class=HTMLResponse)
 async def show_form(request: Request):
-    return templates.TemplateResponse("form.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 
@@ -34,15 +44,15 @@ async def train_route():
 
 
 @app.post("/predict")
-async def predict(
+async def predict_shipping_cost(
     customerId: str = Form(...),
     artistName: str = Form(...),
     artist: float = Form(...),
+    material: str = Form(...),
+    priceOfSculpture: float = Form(...),
     height: float = Form(...),
     width: float = Form(...),
     weight: float = Form(...),
-    material: str = Form(...),
-    priceOfSculpture: float = Form(...),
     baseShippingPrice: float = Form(...),
     international: str = Form(...),
     expressShipment: str = Form(...),
@@ -51,48 +61,52 @@ async def predict(
     fragile: str = Form(...),
     customerInformation: str = Form(...),
     remoteLocation: str = Form(...),
-    scheduledDate: str = Form(...),   # Not used in prediction
-    deliveryDate: str = Form(...),    # Not used in prediction
-    customerLocation: str = Form(...) # Not used in prediction
+    customerLocation: str = Form(...),
+    scheduledDate: str = Form(...),
+    deliveryDate: str = Form(...)
 ):
     try:
-        # Step 1: Wrap input into shippingData class
-        shipping_data = shippingData(
-            artistReputation=artist,
-            height=height,
-            width=width,
-            weight=weight,
-            material=material,
-            priceOfSculpture=priceOfSculpture,
-            baseShippingPrice=baseShippingPrice,
-            international=international,
-            expressShipment=expressShipment,
-            installationIncluded=installationIncluded,
-            transport=transport,
-            fragile=fragile,
-            customerInformation=customerInformation,
-            remoteLocation=remoteLocation
-        )
+        # Extract month and year from deliveryDate
+        delivery_dt = datetime.strptime(deliveryDate, "%Y-%m-%d")
+        month = delivery_dt.month
+        year = delivery_dt.year
 
-        # print("data reecived")
-        # Log the input data
-        logging.info(f"Received input data: {shipping_data}")
+        # Create input DataFrame
+        input_data = pd.DataFrame([{
+            'Artist Reputation': artist,
+            'Height': height,
+            'Width': width,
+            'Base Shipping Price': baseShippingPrice,
+            'Month': month,
+            'Year': year,
+            'Material': material,
+            'International': international,
+            'Express Shipment': expressShipment,
+            'Installation Included': installationIncluded,
+            'Transport': transport,
+            'Fragile': fragile,
+            'Customer Information': customerInformation,
+            'Remote Location': remoteLocation,
+            'Price Of Sculpture': priceOfSculpture,
+            'Weight': weight
+        }])
 
-        # Step 2: Convert to DataFrame
-        input_df = shipping_data.get_input_data_frame()
+        # Make prediction
+        prediction = pipeline.predict(input_data)
+        estimated_cost = float(np.expm1(prediction[0]))  # if log1p was used during training
 
-        # Step 3: Load model and predict
-        predictor = CostPredictor()
-        prediction = predictor.predict(input_df)
-
-        return {
-            "customer_id": customerId,
-            "artist_name": artistName,
-            "estimated_shipping_cost": float(prediction[0])
-        }
+        # Return prediction result as JSON
+        return JSONResponse({"estimated_shipping_cost": round(estimated_cost, 2)})
 
     except Exception as e:
-        return {"error": str(e)}
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+# Run the server (use this if running directly)
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
+
+
+
 
 #to start server
 # python -m uvicorn backend:app --reload
