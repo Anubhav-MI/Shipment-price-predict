@@ -1,6 +1,8 @@
 import pickle
 import pandas as pd
-from sklearn.metrics import root_mean_squared_error, r2_score
+from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
+
 import os
 
 class ModelEvaluation:
@@ -40,7 +42,7 @@ class ModelEvaluation:
         except Exception as e:
             raise RuntimeError(f"❌ Model prediction failed: {e}")
 
-        rmse = root_mean_squared_error(y_test, preds)
+        rmse = np.sqrt(mean_squared_error(y_test, preds))
         r2 = r2_score(y_test, preds)
 
         print("✅ Evaluation Complete")
