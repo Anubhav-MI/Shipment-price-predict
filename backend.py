@@ -26,7 +26,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
 # Define the root route
 
-@app.get("/form", response_class=HTMLResponse)
+@app.get("/", response_class=HTMLResponse)
 async def show_form(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
