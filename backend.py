@@ -45,15 +45,13 @@ async def train_route():
 
 @app.post("/predict")
 async def predict_shipping_cost(
-    customerId: str = Form(...),
-    artistName: str = Form(...),
     artist: float = Form(...),
-    material: str = Form(...),
-    priceOfSculpture: float = Form(...),
     height: float = Form(...),
     width: float = Form(...),
-    weight: float = Form(...),
     baseShippingPrice: float = Form(...),
+    priceOfSculpture: float = Form(...),
+    weight: float = Form(...),
+    material: str = Form(...),
     international: str = Form(...),
     expressShipment: str = Form(...),
     installationIncluded: str = Form(...),
@@ -61,24 +59,28 @@ async def predict_shipping_cost(
     fragile: str = Form(...),
     customerInformation: str = Form(...),
     remoteLocation: str = Form(...),
-    customerLocation: str = Form(...),
-    scheduledDate: str = Form(...),
-    deliveryDate: str = Form(...)
+    shipmentMonth: str = Form(...),
+    shipmentYear: int = Form(...)
 ):
     try:
-        # Extract month and year from deliveryDate
-        delivery_dt = datetime.strptime(deliveryDate, "%Y-%m-%d")
-        month = delivery_dt.month
-        year = delivery_dt.year
+        # Convert month string to number
+        month_mapping = {
+            'January': 1, 'February': 2, 'March': 3, 'April': 4,
+            'May': 5, 'June': 6, 'July': 7, 'August': 8,
+            'September': 9, 'October': 10, 'November': 11, 'December': 12
+        }
+        month = month_mapping.get(shipmentMonth)
+        if not month:
+            return JSONResponse({"error": "Invalid month name."}, status_code=400)
 
-        # Create input DataFrame
+        # Construct input data
         input_data = pd.DataFrame([{
             'Artist Reputation': artist,
             'Height': height,
             'Width': width,
             'Base Shipping Price': baseShippingPrice,
             'Month': month,
-            'Year': year,
+            'Year': shipmentYear,
             'Material': material,
             'International': international,
             'Express Shipment': expressShipment,
@@ -93,14 +95,12 @@ async def predict_shipping_cost(
 
         # Make prediction
         prediction = pipeline.predict(input_data)
-        estimated_cost = float(np.expm1(prediction[0]))  # if log1p was used during training
+        estimated_cost = float(np.expm1(prediction[0]))  # if log1p was used
 
-        # Return prediction result as JSON
         return JSONResponse({"estimated_shipping_cost": round(estimated_cost, 2)})
 
     except Exception as e:
         return JSONResponse({"error": str(e)}, status_code=500)
-
 # Run the server (use this if running directly)
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

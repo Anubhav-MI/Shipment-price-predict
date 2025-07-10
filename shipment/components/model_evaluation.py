@@ -46,7 +46,7 @@ class ModelEvaluation:
         r2 = r2_score(y_test, preds)
 
         print("✅ Evaluation Complete")
-        print(f"RMSE: {rmse:.2f}")
-        print(f"R2 Score: {r2:.2f}")
+        # print(f"RMSE: {rmse:.2f}")
+        # print(f"R2 Score: {r2:.2f}")
 
         return {'rmse': rmse, 'r2_score': r2}
