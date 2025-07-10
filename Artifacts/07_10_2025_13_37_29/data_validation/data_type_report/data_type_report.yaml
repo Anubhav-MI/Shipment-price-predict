@@ -1,0 +1,76 @@
+Artist Name:
+  actual: object
+  expected: categorical
+  status: true
+Artist Reputation:
+  actual: float64
+  expected: numeric
+  status: true
+Base Shipping Price:
+  actual: float64
+  expected: numeric
+  status: true
+Customer Id:
+  actual: object
+  expected: categorical
+  status: true
+Customer Information:
+  actual: object
+  expected: categorical
+  status: true
+Customer Location:
+  actual: object
+  expected: categorical
+  status: true
+Delivery Date:
+  actual: object
+  expected: categorical
+  status: true
+Express Shipment:
+  actual: object
+  expected: categorical
+  status: true
+Fragile:
+  actual: object
+  expected: categorical
+  status: true
+Height:
+  actual: float64
+  expected: numeric
+  status: true
+Installation Included:
+  actual: object
+  expected: categorical
+  status: true
+International:
+  actual: object
+  expected: categorical
+  status: true
+Material:
+  actual: object
+  expected: categorical
+  status: true
+Price Of Sculpture:
+  actual: float64
+  expected: numeric
+  status: true
+Remote Location:
+  actual: object
+  expected: categorical
+  status: true
+Scheduled Date:
+  actual: object
+  expected: categorical
+  status: true
+Transport:
+  actual: object
+  expected: categorical
+  status: true
+Weight:
+  actual: float64
+  expected: numeric
+  status: true
+Width:
+  actual: float64
+  expected: numeric
+  status: true
