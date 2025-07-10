@@ -82,8 +82,8 @@ def run_training_pipeline():
 
             return {
                 "status": "Pipeline executed successfully ✅",
-                "prediction_sample_cost": cost_value,
-                "evaluation_metrics": evaluation_result
+                # "prediction_sample_cost": cost_value,
+                # "evaluation_metrics": evaluation_result
             }
         else:
             msg = "⚠️ Validation failed. Skipping pipeline."
