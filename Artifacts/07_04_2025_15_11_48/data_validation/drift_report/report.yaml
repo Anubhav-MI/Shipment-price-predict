@@ -1,0 +1,122 @@
+Artist Name:
+  drift_status: &id003 !!python/object/apply:numpy._core.multiarray.scalar
+  - &id001 !!python/object/apply:numpy.dtype
+    args:
+    - b1
+    - false
+    - true
+    state: !!python/tuple
+    - 3
+    - '|'
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    AQ==
+  p_value: 1.255e-321
+Artist Reputation:
+  drift_status: &id002 !!python/object/apply:numpy._core.multiarray.scalar
+  - *id001
+  - !!binary |
+    AA==
+<<<<<<<< HEAD:Artifacts/07_04_2025_14_09_32/data_validation/drift_report/report.yaml
+  p_value: 0.3653212124106902
+Base Shipping Price:
+  drift_status: *id002
+  p_value: 0.2134923964394804
+Cost:
+  drift_status: *id002
+  p_value: 0.8822996433891612
+========
+  p_value: 0.369249334430307
+Base Shipping Price:
+  drift_status: *id002
+  p_value: 0.5798987793112084
+Cost:
+  drift_status: *id002
+  p_value: 0.652735837838265
+>>>>>>>> 1f618b6afadf330a5148b4ce99c7ed6484ed39db:Artifacts/07_04_2025_15_11_48/data_validation/drift_report/report.yaml
+Customer Id:
+  drift_status: *id003
+  p_value: 1.245e-321
+Customer Information:
+  drift_status: *id002
+  p_value: 0.9999999987217387
+Customer Location:
+  drift_status: *id003
+  p_value: 1.245e-321
+Delivery Date:
+  drift_status: *id003
+<<<<<<<< HEAD:Artifacts/07_04_2025_14_09_32/data_validation/drift_report/report.yaml
+  p_value: 2.4570976394555434e-178
+========
+  p_value: 8.656944230459554e-174
+>>>>>>>> 1f618b6afadf330a5148b4ce99c7ed6484ed39db:Artifacts/07_04_2025_15_11_48/data_validation/drift_report/report.yaml
+Express Shipment:
+  drift_status: *id002
+  p_value: 0.7854821554735582
+Fragile:
+  drift_status: *id002
+  p_value: 1.0
+Height:
+  drift_status: *id002
+<<<<<<<< HEAD:Artifacts/07_04_2025_14_09_32/data_validation/drift_report/report.yaml
+  p_value: 0.4219887355818557
+Installation Included:
+  drift_status: *id002
+  p_value: 1.0
+International:
+  drift_status: *id002
+  p_value: 0.7254770907614188
+Material:
+  drift_status: *id002
+  p_value: 0.8046052770412124
+========
+  p_value: 0.8284566056698087
+Installation Included:
+  drift_status: *id002
+  p_value: 0.9832770510723982
+International:
+  drift_status: *id002
+  p_value: 0.9999999999998932
+Material:
+  drift_status: *id002
+  p_value: 0.4519225519227243
+>>>>>>>> 1f618b6afadf330a5148b4ce99c7ed6484ed39db:Artifacts/07_04_2025_15_11_48/data_validation/drift_report/report.yaml
+Price Of Sculpture:
+  drift_status: *id002
+  p_value: 0.7951108114377476
+Remote Location:
+  drift_status: *id002
+<<<<<<<< HEAD:Artifacts/07_04_2025_14_09_32/data_validation/drift_report/report.yaml
+  p_value: 1.0
+Scheduled Date:
+  drift_status: *id003
+  p_value: 1.2645502460290984e-181
+Transport:
+  drift_status: *id002
+  p_value: 1.0
+Weight:
+  drift_status: *id002
+  p_value: 0.5339362479860643
+Width:
+  drift_status: *id002
+  p_value: 0.5158114513750437
+========
+  p_value: 0.9177555163351789
+Scheduled Date:
+  drift_status: *id003
+  p_value: 2.755211669983788e-182
+Transport:
+  drift_status: *id002
+  p_value: 0.9977783557765296
+Weight:
+  drift_status: *id002
+  p_value: 0.489527942986739
+Width:
+  drift_status: *id002
+  p_value: 0.4300145002029635
+>>>>>>>> 1f618b6afadf330a5148b4ce99c7ed6484ed39db:Artifacts/07_04_2025_15_11_48/data_validation/drift_report/report.yaml

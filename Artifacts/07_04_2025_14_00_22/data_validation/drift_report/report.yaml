@@ -1,0 +1,79 @@
+Artist Name:
+  drift_status: &id001 !!python/object/apply:numpy.core.multiarray.scalar
+  - &id002 !!python/object/apply:numpy.dtype
+    args:
+    - b1
+    - false
+    - true
+    state: !!python/tuple
+    - 3
+    - '|'
+    - null
+    - null
+    - null
+    - -1
+    - -1
+    - 0
+  - !!binary |
+    AQ==
+  p_value: 1.245e-321
+Artist Reputation:
+  drift_status: *id001
+  p_value: 0.014360030753020649
+Base Shipping Price:
+  drift_status: &id003 !!python/object/apply:numpy.core.multiarray.scalar
+  - *id002
+  - !!binary |
+    AA==
+  p_value: 0.4519225519227243
+Cost:
+  drift_status: *id003
+  p_value: 0.3645126270969328
+Customer Id:
+  drift_status: *id001
+  p_value: 1.245e-321
+Customer Information:
+  drift_status: *id003
+  p_value: 1.0
+Customer Location:
+  drift_status: *id001
+  p_value: 1.245e-321
+Delivery Date:
+  drift_status: *id001
+  p_value: 8.829447100509321e-158
+Express Shipment:
+  drift_status: *id003
+  p_value: 0.9910034314893839
+Fragile:
+  drift_status: *id003
+  p_value: 0.9999969225525
+Height:
+  drift_status: *id003
+  p_value: 0.6955972824565428
+Installation Included:
+  drift_status: *id003
+  p_value: 1.0
+International:
+  drift_status: *id003
+  p_value: 0.999956657458214
+Material:
+  drift_status: *id003
+  p_value: 0.14995361352230244
+Price Of Sculpture:
+  drift_status: *id003
+  p_value: 0.2818213061592116
+Remote Location:
+  drift_status: *id003
+  p_value: 1.0
+Scheduled Date:
+  drift_status: *id001
+  p_value: 5.438052286609147e-179
+Transport:
+  drift_status: *id003
+  p_value: 0.956085813847216
+Weight:
+  drift_status: *id003
+  p_value: 0.20659143289404633
+Width:
+  drift_status: *id003
+  p_value: 0.9542269213808705
